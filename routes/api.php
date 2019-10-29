@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('herois', 'HeroisController@listar');
+Route::get('herois/{id}', 'HeroisController@buscarPorId')->where('id', '[0-9]*');
+Route::get('herois/poder/{poder}/{incluirSecundario?}', 'HeroisController@buscarPorPoder')->where('incluirSecundario', '[y]');
+Route::post('herois', 'HeroisController@criar');
+Route::put('herois/{id}', 'HeroisController@atualizar');
+Route::delete('herois/{id}', 'HeroisController@remover')->where('id', '[0-9]*');
+
+Route::fallback('ErroController@naoEncontrado');
